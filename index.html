@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta de Servicios Digitales</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #EF4444;
+    --orange: #2563EB;
+    --gold: #06B6D4;
+    --dark: #111214;
+    --dark2: #1A1C1F;
+    --dark3: #212428;
+    --cream: #F0F2F5;
+    --cream2: #B8BEC8;
+    --text-muted: #6B7280;
+    --border: rgba(6,182,212,0.15);
+    --blue: #2563EB;
+    --cyan: #06B6D4;
+    --violet: #7C3AED;
+  }
+
+  body {
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--dark2);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .brand-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 8px;
+  }
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 0.95;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+  header h1 span { color: var(--orange); }
+  .header-meta {
+    text-align: right;
+  }
+  .header-meta p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+  .header-meta strong { color: var(--cream); font-weight: 500; }
+  .tagline {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-style: italic;
+    max-width: 520px;
+    border-left: 2px solid var(--violet);
+    padding-left: 14px;
+  }
+
+  /* ── LAYOUT ── */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px;
+  }
+  section { margin-bottom: 64px; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--violet);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    color: var(--cream);
+    letter-spacing: 0.03em;
+    margin-bottom: 28px;
+    line-height: 1;
+  }
+
+  /* ── SERVICE CARDS ── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 640px) { .services-grid { grid-template-columns: 1fr; } }
+
+  .service-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .service-card:hover { border-color: rgba(6,182,212,0.5); }
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .service-card:hover::after { opacity: 1; }
+
+  .service-icon {
+    font-size: 26px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .service-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .service-desc ul {
+    list-style: none;
+    padding: 0;
+  }
+  .service-desc ul li {
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .service-desc ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-size: 11px;
+    top: 5px;
+  }
+  .price-tag {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .price-currency {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+  .price-period {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .price-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* full-width card */
+  .service-card.full {
+    grid-column: 1 / -1;
+  }
+  .full-inner {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .full-inner .info { flex: 1 1 260px; }
+  .full-inner .pricing-split {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .pricing-block {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    min-width: 130px;
+  }
+  .pricing-block-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* ── PACKAGES ── */
+  .packages-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 720px) { .packages-grid { grid-template-columns: 1fr; } }
+
+  .pkg-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 30px 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .pkg-card.featured {
+    border-color: var(--orange);
+    background: linear-gradient(160deg, #1E1A2E 0%, var(--dark2) 100%);
+  }
+  .pkg-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .pkg-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    margin-bottom: 4px;
+    margin-top: 8px;
+  }
+  .pkg-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  .pkg-price-area {
+    background: var(--dark3);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .pkg-price-area .price-amount { font-size: 42px; }
+  .pkg-regular {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .pkg-regular s { color: var(--red); opacity: 0.8; }
+  .pkg-saving {
+    font-size: 11px;
+    color: #22D3EE;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .pkg-includes {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .pkg-items {
+    list-style: none;
+    padding: 0;
+    flex: 1;
+  }
+  .pkg-items li {
+    font-size: 13px;
+    color: var(--cream2);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pkg-items li:last-child { border-bottom: none; }
+  .check { color: var(--gold); font-size: 12px; flex-shrink: 0; }
+
+  /* ── FOTO ADD-ON ── */
+  .addon-card {
+    background: linear-gradient(135deg, var(--dark2) 0%, #1E1610 100%);
+    border: 1px dashed rgba(240,165,0,0.35);
+    border-radius: 14px;
+    padding: 32px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .addon-info { flex: 1 1 280px; }
+  .addon-pricing { flex: 0 0 auto; }
+  .addon-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .addon-note {
+    display: inline-block;
+    background: rgba(212,43,43,0.2);
+    color: #E87878;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 2px 10px;
+    margin-bottom: 10px;
+  }
+  .addon-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+    max-width: 420px;
+  }
+  .addon-items {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .addon-items li {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--cream2);
+    border-radius: 6px;
+    padding: 4px 12px;
+  }
+  .addon-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .addon-price-row {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    min-width: 180px;
+  }
+  .addon-price-row .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 4px;
+  }
+
+  /* ── NOTES ── */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 640px) { .notes-grid { grid-template-columns: 1fr; } }
+
+  .note-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+  }
+  .note-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--violet);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .note-card p, .note-card ul {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .note-card ul { list-style: none; padding: 0; }
+  .note-card ul li::before { content: '• '; color: var(--orange); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark2);
+    border-top: 1px solid var(--border);
+    padding: 32px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 16px;
+  }
+  footer p { font-size: 12px; color: var(--text-muted); }
+  .footer-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <p class="brand-label">Propuesta de Servicios Digitales · 2026</p>
+      <h1>Presencia<br><span>Digital</span><br>Total</h1>
+    </div>
+    <div class="header-meta">
+      <p><strong>Preparado para:</strong><br>Negocio Local de Bebidas<br>Monterrey, N.L.</p>
+      <p style="margin-top:12px"><strong>Válido hasta:</strong><br>15 días a partir<br>de la entrega</p>
+    </div>
+  </div>
+  <p class="tagline">Soluciones digitales para llevar tu negocio de clamatos, micheladas y más al siguiente nivel — con presencia online real y ventas por plataformas.</p>
+</header>
+
+<main>
+
+  <!-- SERVICIOS INDIVIDUALES -->
+  <section>
+    <p class="section-label">Servicios disponibles</p>
+    <h2 class="section-title">Menú de Servicios</h2>
+
+    <div class="services-grid">
+
+      <!-- Google Business -->
+      <div class="service-card">
+        <span class="service-icon">📍</span>
+        <div class="service-name">Google Business Profile</div>
+        <div class="service-desc">
+          <ul>
+            <li>Auditoría completa del perfil actual</li>
+            <li>Optimización de categorías, horarios y atributos</li>
+            <li>Subida de fotos y descripción optimizada</li>
+            <li>Configuración de preguntas frecuentes y respuestas</li>
+            <li>Reporte de estado inicial vs final</li>
+          </ul>
+        </div>
+        <div class="price-tag">
+          <span class="price-currency">$</span>
+          <span class="price-amount">1,800</span>
+          <span class="price-currency">MXN</span>
+        </div>
+        <div class="price-note">Pago único · Entrega en 3–5 días hábiles</div>
+      </div>
+
+      <!-- Redes Sociales -->
+      <div class="service-card">
+        <span class="service-icon">📲</span>
+        <div class="service-name">Manejo de Redes Sociales</div>
+        <div class="service-desc">
+          <ul>
+            <li>Facebook e Instagram (crecimiento orgánico)</li>
+            <li>12–16 publicaciones mensuales + stories</li>
+            <li>Diseño de contenido y copywriting</li>
+            <li>Gestión de comentarios y mensajes directos</li>
+            <li>Reporte mensual de métricas</li>
+          </ul>
+        </div>
+        <div class="price-tag">
+          <span class="price-currency">$</span>
+          <span class="price-amount">3,500</span>
+          <span class="price-currency">MXN</span>
+        </div>
+        <div class="price-note">Mensual · Mínimo 2 meses de contrato</div>
+      </div>
+
+      <!-- Landing Page -->
+      <div class="service-card">
+        <span class="service-icon">🌐</span>
+        <div class="service-name">Landing Page con Menú</div>
+        <div class="service-desc">
+          <ul>
+            <li>Diseño y desarrollo de página web profesional</li>
+            <li>Menú visual de productos con precios</li>
+            <li>Sección de contacto y ubicación</li>
+            <li>Adaptada para celular (responsive)</li>
+            <li>Dominio + hosting primer año incluídos</li>
+          </ul>
+        </div>
+        <div class="price-tag">
+          <span class="price-currency">$</span>
+          <span class="price-amount">5,500</span>
+          <span class="price-currency">MXN</span>
+        </div>
+        <div class="price-note">Pago único · Entrega en 7–10 días hábiles</div>
+      </div>
+
+      <!-- Didi Food -->
+      <div class="service-card">
+        <span class="service-icon">🛵</span>
+        <div class="service-name">Alta en Didi Food</div>
+        <div class="service-desc">
+          <ul>
+            <li>Gestión completa del proceso de registro</li>
+            <li>Alta del menú digital con fotos y precios</li>
+            <li>Configuración de horarios y zonas de entrega</li>
+            <li>Capacitación básica para uso de la plataforma</li>
+            <li>Seguimiento hasta aprobación del perfil</li>
+          </ul>
+        </div>
+        <div class="price-tag">
+          <span class="price-currency">$</span>
+          <span class="price-amount">2,200</span>
+          <span class="price-currency">MXN</span>
+        </div>
+        <div class="price-note">Pago único · 5–8 días hábiles (sujeto a aprobación de Didi)</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PAQUETES -->
+  <section>
+    <p class="section-label">Mayor valor por tu inversión</p>
+    <h2 class="section-title">Paquetes Completos</h2>
+
+    <div class="packages-grid">
+
+      <!-- ESENCIAL -->
+      <div class="pkg-card">
+        <div class="pkg-name">Esencial</div>
+        <div class="pkg-subtitle">Para comenzar con lo básico</div>
+        <div class="pkg-price-area">
+          <div class="price-tag" style="justify-content:center">
+            <span class="price-currency">$</span>
+            <span class="price-amount">4,800</span>
+            <span class="price-currency">MXN</span>
+          </div>
+          <div class="pkg-regular">Regular: <s>$5,300 MXN</s></div>
+          <div class="pkg-saving">Ahorro: $500 MXN</div>
+        </div>
+        <div class="pkg-includes">Qué incluye</div>
+        <ul class="pkg-items">
+          <li><span class="check">✦</span> Google Business Profile optimizado</li>
+          <li><span class="check">✦</span> Alta en Didi Food completa</li>
+          <li><span class="check">✦</span> 1 mes de redes sociales incluido</li>
+        </ul>
+      </div>
+
+      <!-- CRECIMIENTO — FEATURED -->
+      <div class="pkg-card featured">
+        <div class="pkg-badge">⭐ Más Popular</div>
+        <div class="pkg-name">Crecimiento</div>
+        <div class="pkg-subtitle">La solución completa y recomendada</div>
+        <div class="pkg-price-area">
+          <div class="price-tag" style="justify-content:center">
+            <span class="price-currency">$</span>
+            <span class="price-amount">10,500</span>
+            <span class="price-currency">MXN</span>
+          </div>
+          <div class="pkg-regular">Regular: <s>$13,000 MXN</s></div>
+          <div class="pkg-saving">Ahorro: $2,500 MXN</div>
+        </div>
+        <div class="pkg-includes">Qué incluye</div>
+        <ul class="pkg-items">
+          <li><span class="check">✦</span> Google Business Profile optimizado</li>
+          <li><span class="check">✦</span> Landing Page con menú completo</li>
+          <li><span class="check">✦</span> Alta en Didi Food</li>
+          <li><span class="check">✦</span> 2 meses de redes sociales</li>
+          <li><span class="check">✦</span> Configuración inicial de WhatsApp Business</li>
+        </ul>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="pkg-card">
+        <div class="pkg-name">Premium</div>
+        <div class="pkg-subtitle">Todo + sesión fotográfica incluida</div>
+        <div class="pkg-price-area">
+          <div class="price-tag" style="justify-content:center">
+            <span class="price-currency">$</span>
+            <span class="price-amount">13,500</span>
+            <span class="price-currency">MXN</span>
+          </div>
+          <div class="pkg-regular">Regular: <s>$16,500 MXN</s></div>
+          <div class="pkg-saving">Ahorro: $3,000 MXN</div>
+        </div>
+        <div class="pkg-includes">Qué incluye</div>
+        <ul class="pkg-items">
+          <li><span class="check">✦</span> Todo lo del paquete Crecimiento</li>
+          <li><span class="check">✦</span> Sesión fotográfica profesional (sub.)</li>
+          <li><span class="check">✦</span> 20–30 fotos editadas de productos</li>
+          <li><span class="check">✦</span> Fotos para redes, web y Didi Food</li>
+          <li><span class="check">✦</span> 3 meses de redes sociales</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- NOTAS -->
+  <section>
+    <p class="section-label">Información importante</p>
+    <h2 class="section-title">Condiciones y Notas</h2>
+    <div class="notes-grid">
+      <div class="note-card">
+        <h4>💳 Forma de Pago</h4>
+        <ul>
+          <li>50% de anticipo para iniciar cualquier servicio individual de pago único</li>
+          <li>50% restante contra entrega</li>
+          <li>Servicios mensuales y paquetes: pago adelantado</li>
+          <li>Transferencia o efectivo, actualmente no cuento con facturación disponible</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h4>📋 Lo que el cliente debe proporcionar</h4>
+        <ul>
+          <li>Logo del negocio</li>
+          <li>Fotos del local o productos</li>
+          <li>Lista de productos y precios actual</li>
+          <li>Acceso a cuentas de redes existentes</li>
+          <li>Documentación necesaria para ejecutar los trámites correspondientes a cada servicio</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h4>🔄 Mantenimiento Mensual (post-lanzamiento)</h4>
+        <p>Después del primer mes, el servicio de redes sociales puede contratarse de forma independiente por <strong style="color:var(--gold)">$3,500 MXN/mes</strong>. Renovación con 5 días de anticipación.</p>
+      </div>
+      <div class="note-card">
+        <h4>⚡ Tiempos de Entrega</h4>
+        <ul>
+          <li>Google Business: 3–5 días hábiles</li>
+          <li>Landing Page: 7–10 días hábiles</li>
+          <li>Didi Food: 5–8 días (aprobación de plataforma)</li>
+          <li>Paquetes: 10–15 días hábiles en total</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>
+    <p style="font-size:13px;color:var(--cream2);margin-bottom:4px">¿Listo para hacer crecer tu negocio?</p>
+    <p>Esta cotización tiene vigencia de 15 días a partir de su emisión.</p>
+  </div>
+  <a class="footer-cta" href="https://wa.me/528121205010?text=Hola%2C%20acepto%20la%20propuesta%20de%20servicios%20digitales%20%F0%9F%91%8D" target="_blank">Acepto la Propuesta →</a>
+</footer>
+
+</body>
+</html>
